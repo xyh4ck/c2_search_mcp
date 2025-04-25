@@ -1,0 +1,132 @@
+# 基于FastMCP的威胁情报查询服务
+
+## 项目概述
+
+本项目是一个基于FastMCP的威胁情报查询服务，支持查询IP地址、URL或文件哈希（MD5、SHA1、SHA256）等信息的威胁情报数据。该服务集成了多个威胁情报平台的API，为安全分析人员和系统管理员提供便捷的威胁情报查询功能，以提升威胁识别和响应的效率。
+
+## 功能特点
+
+- 支持多种威胁情报查询类型：IP、URL、文件哈希
+- 集成多个威胁情报平台：VirusTotal、AbuseIPDB、Hybrid Analysis等
+- 提供统一的查询接口和结果格式
+- 支持异步查询，提高响应效率
+- 完善的日志记录和审计功能
+
+## 安装说明
+
+### 环境要求
+
+- Python 3.12 或更高版本
+- uv包管理工具
+
+### 安装步骤
+
+1. 克隆代码仓库
+   ```bash
+   git clone https://github.com/yourusername/threat-intel-mcp.git
+   cd threat-intel-mcp
+   ```
+
+2. 安装uv（如果尚未安装）
+   ```bash
+   # Windows
+   pip install uv
+   
+   # Linux/macOS
+   curl -sSf https://github.com/astral-sh/uv/releases/latest/download/uv-installer.sh | bash
+   ```
+
+3. 使用uv同步开发环境（推荐）
+   ```bash
+   # 使用uv.lock文件同步依赖
+   uv pip sync uv.lock
+   ```
+
+   或者直接安装依赖
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+
+4. 配置API密钥
+   ```bash
+   cp config.example.yaml config.yaml
+   # 编辑config.yaml，填入各平台的API密钥
+   ```
+
+### 开发环境
+
+如果您是开发者，以下是管理项目依赖的方法：
+
+1. 添加新的依赖项后，生成新的lock文件
+   ```bash
+   uv lock
+   ```
+
+2. 其他开发者可以使用以下命令同步环境
+   ```bash
+   uv sync
+   ```
+
+## 使用方法
+
+### 启动服务
+
+```bash
+python -m src.main
+```
+
+### 查询示例
+
+使用MCP客户端进行查询：
+
+```python
+from fastmcp import MCPClient
+
+client = MCPClient("http://localhost:8000")
+
+# 查询IP
+result = client.query("ip", "8.8.8.8")
+print(result)
+
+# 查询URL
+result = client.query("url", "https://example.com")
+print(result)
+
+# 查询文件哈希
+result = client.query("hash", "44d88612fea8a8f36de82e1278abb02f")
+print(result)
+```
+
+## 项目结构
+
+```
+threat-intel-mcp/
+├── src/
+│   ├── modules/
+│   │   ├── query_processor/   # 查询处理模块
+│   │   ├── threat_intel/      # 威胁情报API集成
+│   │   ├── result_aggregator/ # 结果聚合模块
+│   │   └── logging/           # 日志模块
+│   ├── main.py                # 主程序入口
+│   └── config.py              # 配置管理
+├── tests/                     # 测试代码
+├── docs/                      # 文档
+├── requirements.txt           # 依赖项
+├── uv.lock                    # uv锁定文件，确保环境一致性
+├── config.example.yaml        # 配置文件示例
+└── README.md                  # 项目说明
+```
+
+## 贡献指南
+
+欢迎提交问题报告和功能请求。如果您想贡献代码，请遵循以下步骤：
+
+1. Fork 项目仓库
+2. 创建您的功能分支 (`git checkout -b feature/amazing-feature`)
+3. 提交您的更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 开启一个 Pull Request
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。 

@@ -1,0 +1,77 @@
+# 服务器配置
+server:
+  host: "127.0.0.1"
+  port: 8000
+  debug: false
+
+# 日志配置
+logging:
+  level: "INFO"
+  file: "logs/threat_intel.log"
+  rotation: "1 day"
+  retention: "30 days"
+
+# API密钥配置
+api_keys:
+  virustotal: "40acedb33fb60623ce91a919fd5af5f20046f8eab87e21b83a08687f1c5a85e0"
+  abuseipdb: "3abd6b36257a532f7a5451abbf8165545b7c25d4320d11a35ef3324125212449b61b3e8a8900dd38"
+  hybrid_analysis: "0zvdx3vjfa17d027u0pn2xsc63e3ccdanw41u5k4c66b5314ds1qz08kc02177ef"
+  urlscan: "01966cc2-9034-706a-b357-6636d79ce840"
+  threatfox: "f00fddd32b894eb4025246488d7ba796c69432648ccee59d"
+  ipinfo: "56aeda48619b4f"
+  shodan: "pi6yEaZK56cv99dfxetcf2WfRWd3Id5W"
+
+# API 接口配置
+api:
+  virustotal:
+    base_url: "https://www.virustotal.com/api/v3"
+    timeout: 30
+    retry_attempts: 3
+    rate_limit: 4  # 请求/分钟
+  
+  abuseipdb:
+    base_url: "https://api.abuseipdb.com/api/v2"
+    timeout: 15
+    retry_attempts: 2
+    rate_limit: 60  # 请求/分钟
+  
+  hybrid_analysis:
+    base_url: "https://www.hybrid-analysis.com/api/v2"
+    timeout: 30
+    retry_attempts: 2
+    rate_limit: 20  # 请求/分钟
+  
+  urlscan:
+    base_url: "https://urlscan.io/api/v1"
+    timeout: 30
+    retry_attempts: 2
+    rate_limit: 10  # 请求/分钟
+  
+  threatfox:
+    base_url: "https://threatfox-api.abuse.ch/api/v1"
+    timeout: 20
+    retry_attempts: 2
+    rate_limit: 30  # 请求/分钟
+  
+  ipinfo:
+    base_url: "https://ipinfo.io"
+    timeout: 10
+    retry_attempts: 2
+    rate_limit: 50  # 请求/分钟
+  
+  shodan:
+    base_url: "https://api.shodan.io"
+    timeout: 20
+    retry_attempts: 2
+    rate_limit: 5  # 请求/分钟
+
+# 查询配置
+query:
+  # 单个查询超时时间（秒）
+  timeout: 60
+  # 缓存配置
+  cache:
+    enabled: true
+    ttl: 3600  # 缓存过期时间（秒）
+  # 并发请求限制
+  max_concurrent_requests: 10 

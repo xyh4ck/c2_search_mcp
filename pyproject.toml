@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "threat-intel-mcp"
+version = "0.1.0"
+description = "基于FastMCP的威胁情报查询服务"
+readme = "README.md"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+license = {file = "LICENSE"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastmcp>=0.1.0",
+    "httpx>=0.25.0",
+    "pydantic>=2.5.0",
+    "PyYAML>=6.0",
+    "python-dotenv>=1.0.0",
+    "asyncio>=3.4.3",
+    "aiohttp>=3.9.0",
+    "ujson>=5.8.0",
+    "validators>=0.22.0",
+    "loguru>=0.7.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/threat-intel-mcp"
+"Bug Tracker" = "https://github.com/yourusername/threat-intel-mcp/issues"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*" 

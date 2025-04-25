@@ -1,0 +1,10 @@
+fastmcp>=0.1.0
+httpx>=0.25.0
+pydantic>=2.5.0
+PyYAML>=6.0
+python-dotenv>=1.0.0
+asyncio>=3.4.3
+aiohttp>=3.9.0
+ujson>=5.8.0
+validators>=0.22.0
+loguru>=0.7.0
