@@ -36,6 +36,7 @@ ENV/
 .idea/
 .vscode/
 .cursor/
+.github/
 *.swp
 *.swo
 
