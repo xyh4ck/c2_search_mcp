@@ -31,9 +31,7 @@ class ApiKeyConfig(BaseModel):
     abuseipdb: Optional[str] = None
     hybrid_analysis: Optional[str] = None
     urlscan: Optional[str] = None
-    threatfox: Optional[str] = None
     ipinfo: Optional[str] = None
-    shodan: Optional[str] = None
 
 
 class ApiEndpointConfig(BaseModel):
@@ -50,9 +48,7 @@ class ApiConfig(BaseModel):
     abuseipdb: ApiEndpointConfig
     hybrid_analysis: ApiEndpointConfig
     urlscan: ApiEndpointConfig
-    threatfox: ApiEndpointConfig
     ipinfo: ApiEndpointConfig
-    shodan: ApiEndpointConfig
 
 
 class CacheConfig(BaseModel):

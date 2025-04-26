@@ -12,12 +12,12 @@ async def main():
         print(apis)
 
         # 调用 'query_threat_intel' 工具，示例查询 IP 地址
-        # query_result = await client.call_tool("query_threat_intel", {
-        #     "query_type": "ip",
-        #     "query_value": "8.8.8.8"
-        # })
-        # print("查询结果:")
-        # print(query_result)
+        query_result = await client.call_tool("query_threat_intel", {
+            "query_type": "ip",
+            "query_value": "8.8.8.8"
+        })
+        print("查询结果:")
+        print(query_result)
 
 if __name__ == "__main__":
     asyncio.run(main())

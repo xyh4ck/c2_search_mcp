@@ -17,9 +17,7 @@ api_keys:
   abuseipdb: "your_abuseipdb_api_key_here"
   hybrid_analysis: "your_hybrid_analysis_api_key_here"
   urlscan: "your_urlscan_api_key_here"
-  threatfox: "your_threatfox_api_key_here"
   ipinfo: "your_ipinfo_api_key_here"
-  shodan: "your_shodan_api_key_here"
 
 # API 接口配置
 api:
@@ -47,23 +45,11 @@ api:
     retry_attempts: 2
     rate_limit: 10  # 请求/分钟
   
-  threatfox:
-    base_url: "https://threatfox-api.abuse.ch/api/v1"
-    timeout: 20
-    retry_attempts: 2
-    rate_limit: 30  # 请求/分钟
-  
   ipinfo:
     base_url: "https://ipinfo.io"
     timeout: 10
     retry_attempts: 2
     rate_limit: 50  # 请求/分钟
-  
-  shodan:
-    base_url: "https://api.shodan.io"
-    timeout: 20
-    retry_attempts: 2
-    rate_limit: 5  # 请求/分钟
 
 # 查询配置
 query:

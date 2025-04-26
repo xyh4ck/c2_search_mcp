@@ -11,9 +11,7 @@ from src.modules.threat_intel.virustotal import VirusTotalApi
 from src.modules.threat_intel.abuseipdb import AbuseIPDBApi
 from src.modules.threat_intel.hybrid_analysis import HybridAnalysisApi
 from src.modules.threat_intel.urlscan import URLScanApi
-from src.modules.threat_intel.threatfox import ThreatFoxApi
 from src.modules.threat_intel.ipinfo import IPinfoApi
-from src.modules.threat_intel.shodan import ShodanApi
 
 
 class APIProvider:
@@ -65,14 +63,6 @@ class APIProvider:
             )
             self.logger.info("已初始化 URLScan.io API")
         
-        # ThreatFox
-        if self.config.api_keys.threatfox:
-            self._apis["threatfox"] = ThreatFoxApi(
-                self.config.api_keys.threatfox,
-                self.config.api.threatfox
-            )
-            self.logger.info("已初始化 ThreatFox API")
-        
         # IPinfo
         if self.config.api_keys.ipinfo:
             self._apis["ipinfo"] = IPinfoApi(
@@ -80,14 +70,6 @@ class APIProvider:
                 self.config.api.ipinfo
             )
             self.logger.info("已初始化 IPinfo API")
-        
-        # Shodan
-        if self.config.api_keys.shodan:
-            self._apis["shodan"] = ShodanApi(
-                self.config.api_keys.shodan,
-                self.config.api.shodan
-            )
-            self.logger.info("已初始化 Shodan API")
     
     def get_api(self, api_name: str) -> Optional[Any]:
         """
@@ -118,7 +100,7 @@ class APIProvider:
             List[Any]: API实例列表
         """
         ip_apis = []
-        for api_name in ["virustotal", "abuseipdb", "ipinfo", "shodan", "urlscan", "threatfox"]:
+        for api_name in ["virustotal", "abuseipdb", "ipinfo", "urlscan"]:
             if api_name in self._apis:
                 ip_apis.append(self._apis[api_name])
         return ip_apis
@@ -131,7 +113,7 @@ class APIProvider:
             List[Any]: API实例列表
         """
         url_apis = []
-        for api_name in ["virustotal", "urlscan", "hybrid_analysis", "threatfox"]:
+        for api_name in ["virustotal", "urlscan", "hybrid_analysis"]:
             if api_name in self._apis:
                 url_apis.append(self._apis[api_name])
         return url_apis
@@ -144,7 +126,7 @@ class APIProvider:
             List[Any]: API实例列表
         """
         hash_apis = []
-        for api_name in ["virustotal", "hybrid_analysis", "threatfox"]:
+        for api_name in ["virustotal", "hybrid_analysis"]:
             if api_name in self._apis:
                 hash_apis.append(self._apis[api_name])
         return hash_apis 

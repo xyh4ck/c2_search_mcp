@@ -1,5 +1,5 @@
 """
-基于FastMCP的威胁情报查询服务
+威胁情报集成查询服务
 """
 from fastmcp import FastMCP
 from typing import Dict, Any, List
@@ -7,7 +7,7 @@ from src.modules.query_processor.processor import QueryProcessor
 from src.config import load_config
 
 # 创建FastMCP实例
-mcp = FastMCP("威胁情报查询服务 🚀")
+mcp = FastMCP("威胁情报集成查询服务 🚀")
 
 # 加载配置
 config = load_config("config.yaml")
@@ -45,9 +45,7 @@ async def get_supported_apis() -> Dict[str, List[str]]:
             "abuseipdb",
             "hybrid_analysis",
             "urlscan",
-            "threatfox",
-            "ipinfo",
-            "shodan"
+            "ipinfo"
         ]
     }
 

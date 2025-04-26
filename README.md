@@ -1,4 +1,4 @@
-# 基于FastMCP的威胁情报查询服务
+# 威胁情报集成查询服务
 
 ## 项目概述
 
@@ -6,11 +6,11 @@
 
 ## 功能特点
 
-- 支持多种威胁情报查询类型：IP、URL、文件哈希
-- 集成多个威胁情报平台：VirusTotal、AbuseIPDB、Hybrid Analysis等
-- 提供统一的查询接口和结果格式
-- 支持异步查询，提高响应效率
-- 完善的日志记录和审计功能
+- **多源数据整合**：集成VirusTotal、AbuseIPDB、Hybrid Analysis等主流威胁情报平台
+- **统一查询接口**：提供标准化的API接口，支持批量查询和自动化集成
+- **高性能设计**：采用异步查询机制，支持并发请求处理
+- **完整审计追溯**：详细的日志记录系统，支持查询行为分析和追溯
+- **灵活扩展性**：模块化架构设计，易于集成新的情报源
 
 ## 安装说明
 
@@ -23,8 +23,8 @@
 
 1. 克隆代码仓库
    ```bash
-   git clone https://github.com/yourusername/threat-intel-mcp.git
-   cd threat-intel-mcp
+   git clone https://github.com/xuanyu123/c2_search_mcp.git
+   cd c2_search_mcp
    ```
 
 2. 安装uv（如果尚未安装）
@@ -39,12 +39,7 @@
 3. 使用uv同步开发环境（推荐）
    ```bash
    # 使用uv.lock文件同步依赖
-   uv pip sync uv.lock
-   ```
-
-   或者直接安装依赖
-   ```bash
-   uv pip install -r requirements.txt
+   uv sync
    ```
 
 4. 配置API密钥
@@ -53,68 +48,104 @@
    # 编辑config.yaml，填入各平台的API密钥
    ```
 
-### 开发环境
+## 开发调试
+### MCP Inspector调试
 
-如果您是开发者，以下是管理项目依赖的方法：
+MCP Inspector是一个强大的调试工具，可以帮助您监控和调试MCP服务的运行状态。
 
-1. 添加新的依赖项后，生成新的lock文件
+1. 启动 Inspector
    ```bash
-   uv lock
+   fastmcp dev src/main.py
+   ```
+   或者直接npx运行
+   ```bash
+   npx @modelcontextprotocol/inspector uv run src/main.py
    ```
 
-2. 其他开发者可以使用以下命令同步环境
-   ```bash
-   uv sync
-   ```
+2. 访问调试界面
+   - 打开浏览器访问 `http://localhost:port`（端口在控制台查看）
+   - 在Inspector界面中可以看到所有注册的MCP服务
+   ![images](./images/Inspector.png)
+
+3. 调试功能
+   - 实时监控服务状态
+   - 查看请求/响应日志
+   - 测试API接口
+   - 查看性能指标
+
+### 故障排除
+
+1. 服务无法启动
+   - 检查配置文件是否正确
+   - 确认所有依赖已正确安装
+   - 查看日志文件获取详细错误信息
+
+2. API调用失败
+   - 验证API密钥是否正确配置
+   - 检查网络连接状态
+   - 确认API请求限制是否超出
+
+3. 性能问题
+   - 使用 Inspector 监控性能指标
+   - 检查并发请求处理情况
+   - 优化查询缓存配置
 
 ## 使用方法
 
-### 启动服务
+### 配置MCP服务
+添加到您的 mcp 客户端配置文件，将"YOU_C2_SEARCH_MCP_DIR_PATH"修改为您自己的目录。
 
 ```bash
-python -m src.main
+"c2_search_mcp": {
+   "command": "uv",
+   "args": [
+      "--directory",
+      "YOU_C2_SEARCH_MCP_DIR_PATH",
+      "run",
+      "-m",
+      "src.main"
+   ],
+   "disabled": false,
+   "autoApprove": []
+}
 ```
+### 使用示例
+#### cursor集成
+1. 配置mcp
+![images](./images/cursor_mcp.png)
+2. cursor agent模式下，通过自然语言进行查询
+![images](./images/cursor_use_example.png)
 
-### 查询示例
-
-使用MCP客户端进行查询：
-
-```python
-from fastmcp import MCPClient
-
-client = MCPClient("http://localhost:8000")
-
-# 查询IP
-result = client.query("ip", "8.8.8.8")
-print(result)
-
-# 查询URL
-result = client.query("url", "https://example.com")
-print(result)
-
-# 查询文件哈希
-result = client.query("hash", "44d88612fea8a8f36de82e1278abb02f")
-print(result)
-```
+#### Cherry Studio集成
+1. 配置mcp
+![images](./images/cherry_mcp.png)
+2. Cherry Studio agent模式下，通过自然语言进行查询
+![images](./images/cherrystudio_use_example.png)
 
 ## 项目结构
 
 ```
-threat-intel-mcp/
-├── src/
-│   ├── modules/
+c2_search_mcp/
+├── src/                       # 源代码目录
+│   ├── modules/               # 模块目录
+│   │   ├── adapters/          # 适配器模块
+│   │   ├── formatters/        # 格式化工具
+│   │   ├── logging/           # 日志处理模块
 │   │   ├── query_processor/   # 查询处理模块
-│   │   ├── threat_intel/      # 威胁情报API集成
 │   │   ├── result_aggregator/ # 结果聚合模块
-│   │   └── logging/           # 日志模块
+│   │   ├── services/          # 服务模块
+│   │   ├── threat_intel/      # 威胁情报API集成
+│   │   └── tools/             # 工具模块
+│   ├── config.py              # 配置管理
 │   ├── main.py                # 主程序入口
-│   └── config.py              # 配置管理
+│   └── __init__.py            # 包初始化文件
 ├── tests/                     # 测试代码
 ├── docs/                      # 文档
-├── requirements.txt           # 依赖项
-├── uv.lock                    # uv锁定文件，确保环境一致性
 ├── config.example.yaml        # 配置文件示例
-└── README.md                  # 项目说明
+├── requirements.txt           # Python依赖项
+├── pyproject.toml             # 项目配置文件
+├── uv.lock                    # uv锁定文件，确保环境一致性
+└── README.md                  # 项目说明文档
 ```
 
 ## 贡献指南
