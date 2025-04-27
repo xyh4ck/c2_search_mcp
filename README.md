@@ -11,6 +11,29 @@
 - **高性能设计**：采用异步查询机制，支持并发请求处理
 - **灵活扩展性**：模块化架构设计，易于集成新的情报源
 
+
+## 项目结构
+
+```
+c2_search_mcp/
+├── src/                       # 源代码目录
+│   ├── modules/               # 模块目录
+│   │   ├── logging/           # 日志处理模块
+│   │   ├── query_processor/   # 查询处理模块
+│   │   ├── result_aggregator/ # 结果聚合模块
+│   │   ├── threat_intel/      # 威胁情报API集成
+│   ├── config.py              # 配置管理
+│   ├── main.py                # 主程序入口
+│   └── __init__.py            # 包初始化文件
+├── tests/                     # 测试代码
+├── docs/                      # 文档
+├── config.example.yaml        # 配置文件示例
+├── requirements.txt           # Python依赖项
+├── pyproject.toml             # 项目配置文件
+├── uv.lock                    # uv锁定文件，确保环境一致性
+└── README.md                  # 项目说明文档
+```
+
 ## 安装说明
 
 ### 环境要求
@@ -46,6 +69,39 @@
    cp config.example.yaml config.yaml
    # 编辑config.yaml，填入各平台的API密钥
    ```
+
+## 使用方法
+
+#### 配置MCP服务
+添加到您的 MCP 客户端配置文件，将"YOU_C2_SEARCH_MCP_DIR_PATH"替换为您自己的目录。
+
+```bash
+"c2_search_mcp": {
+   "command": "uv",
+   "args": [
+      "--directory",
+      "YOU_C2_SEARCH_MCP_DIR_PATH",
+      "run",
+      "-m",
+      "src.main"
+   ],
+   "disabled": false,
+   "autoApprove": []
+}
+```
+### 使用示例
+#### cursor集成
+1. 配置mcp
+![images](./images/cursor_mcp.png)
+2. cursor agent模式下，通过自然语言进行查询
+![images](./images/cursor_use_example.png)
+
+#### Cherry Studio集成
+1. 配置mcp
+![images](./images/cherry_mcp.png)
+2. Cherry Studio agent模式下，通过自然语言进行查询
+![images](./images/cherrystudio_use_example.png)
+
 
 ## 开发调试
 ### MCP Inspector调试
@@ -83,60 +139,6 @@ MCP Inspector是一个强大的调试工具，可以帮助您监控和调试MCP�
    - 验证API密钥是否正确配置
    - 检查网络连接状态
    - 确认API请求限制是否超出
-
-## 使用方法
-
-#### 配置MCP服务
-添加到您的 MCP 客户端配置文件，将"YOU_C2_SEARCH_MCP_DIR_PATH"替换为您自己的目录。
-
-```bash
-"c2_search_mcp": {
-   "command": "uv",
-   "args": [
-      "--directory",
-      "YOU_C2_SEARCH_MCP_DIR_PATH",
-      "run",
-      "-m",
-      "src.main"
-   ],
-   "disabled": false,
-   "autoApprove": []
-}
-```
-### 使用示例
-#### cursor集成
-1. 配置mcp
-![images](./images/cursor_mcp.png)
-2. cursor agent模式下，通过自然语言进行查询
-![images](./images/cursor_use_example.png)
-
-#### Cherry Studio集成
-1. 配置mcp
-![images](./images/cherry_mcp.png)
-2. Cherry Studio agent模式下，通过自然语言进行查询
-![images](./images/cherrystudio_use_example.png)
-
-## 项目结构
-
-```
-c2_search_mcp/
-├── src/                       # 源代码目录
-│   ├── modules/               # 模块目录
-│   │   ├── logging/           # 日志处理模块
-│   │   ├── query_processor/   # 查询处理模块
-│   │   ├── result_aggregator/ # 结果聚合模块
-│   │   ├── threat_intel/      # 威胁情报API集成
-│   ├── config.py              # 配置管理
-│   ├── main.py                # 主程序入口
-│   └── __init__.py            # 包初始化文件
-├── tests/                     # 测试代码
-├── docs/                      # 文档
-├── config.example.yaml        # 配置文件示例
-├── requirements.txt           # Python依赖项
-├── pyproject.toml             # 项目配置文件
-├── uv.lock                    # uv锁定文件，确保环境一致性
-└── README.md                  # 项目说明文档
-```
 
 ## 贡献指南
 
