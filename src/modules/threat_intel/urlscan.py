@@ -2,9 +2,7 @@
 URLScan.io API集成
 """
 
-import asyncio
-import time
-from typing import Any, Dict, Union, cast
+from typing import Any, Dict, cast
 
 from src.config import ApiEndpointConfig
 from src.modules.threat_intel.base_api import BaseApi

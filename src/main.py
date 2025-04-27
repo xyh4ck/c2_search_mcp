@@ -27,7 +27,7 @@ async def query_threat_intel(query_type: str, query_value: str) -> Dict[str, Any
     Returns:
         Dict[str, Any]: 查询结果
     """
-    result = await processor.process_query(query_type, query_value, "localhost")
+    result = await processor.process_query(query_type, query_value)
     return result
 
 @mcp.tool()
@@ -43,9 +43,9 @@ async def get_supported_apis() -> Dict[str, List[str]]:
         "integrated_apis": [
             "virustotal",
             "abuseipdb",
-            "hybrid_analysis",
             "urlscan",
-            "ipinfo"
+            "ipinfo",
+            "threatbook"
         ]
     }
 

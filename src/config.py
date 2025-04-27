@@ -3,8 +3,7 @@
 """
 
 import os
-from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Optional
 
 import yaml
 from pydantic import BaseModel, Field
@@ -29,15 +28,15 @@ class ApiKeyConfig(BaseModel):
     """API密钥配置"""
     virustotal: Optional[str] = None
     abuseipdb: Optional[str] = None
-    hybrid_analysis: Optional[str] = None
     urlscan: Optional[str] = None
     ipinfo: Optional[str] = None
+    threatbook: Optional[str] = None
 
 
 class ApiEndpointConfig(BaseModel):
     """API端点配置"""
     base_url: str
-    timeout: int = 30
+    timeout: int = 60
     retry_attempts: int = 3
     rate_limit: int = 10  # 请求/分钟
 
@@ -46,22 +45,9 @@ class ApiConfig(BaseModel):
     """API配置"""
     virustotal: ApiEndpointConfig
     abuseipdb: ApiEndpointConfig
-    hybrid_analysis: ApiEndpointConfig
     urlscan: ApiEndpointConfig
     ipinfo: ApiEndpointConfig
-
-
-class CacheConfig(BaseModel):
-    """缓存配置"""
-    enabled: bool = True
-    ttl: int = 3600  # 缓存过期时间（秒）
-
-
-class QueryConfig(BaseModel):
-    """查询配置"""
-    timeout: int = 60  # 单个查询超时时间（秒）
-    cache: CacheConfig = Field(default_factory=CacheConfig)
-    max_concurrent_requests: int = 10
+    threatbook: ApiEndpointConfig
 
 
 class Config(BaseModel):
@@ -70,7 +56,6 @@ class Config(BaseModel):
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
     api_keys: ApiKeyConfig = Field(default_factory=ApiKeyConfig)
     api: ApiConfig
-    query: QueryConfig = Field(default_factory=QueryConfig)
 
 
 def load_config(config_path: str = "config.yaml") -> Config:

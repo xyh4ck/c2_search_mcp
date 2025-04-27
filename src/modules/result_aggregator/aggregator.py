@@ -3,7 +3,7 @@
 """
 
 from collections import Counter
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Tuple
 
 from src.modules.logging.logger import ServiceLogger
 

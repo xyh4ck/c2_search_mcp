@@ -8,7 +8,6 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Tuple, Union
 
 import httpx
-from loguru import logger
 
 from src.config import ApiEndpointConfig
 from src.modules.logging.logger import ServiceLogger
@@ -101,7 +100,7 @@ class BaseApi(ABC):
         
         # 添加默认请求头
         _headers = {
-            "User-Agent": "ThreatIntelMCP/0.1.0",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Accept": "application/json"
         }
         
@@ -189,7 +188,7 @@ class BaseApi(ABC):
                 self.logger.api_request(
                     api_name=self.api_name,
                     endpoint=endpoint,
-                    status_code=0,
+                    status_code=10000,
                     response_time=response_time,
                     error=error_msg
                 )
