@@ -1,55 +1,56 @@
-# 威胁情报集成查询服务
+# Threat Intelligence Integration Query Service
 
-## 项目概述
+[中文](README_zh.md) [English](README.md)
 
-本项目是基于FastMCP的威胁情报集成查询服务，支持查询IP地址、URL或文件哈希（MD5、SHA1、SHA256）等信息的威胁情报数据。该服务集成了多个威胁情报平台的API，为安全分析人员和系统管理员提供便捷的威胁情报查询功能，以提升威胁识别和响应的效率。
+## Project Overview
 
-## 功能特点
+This project is a threat intelligence integration query service based on FastMCP, supporting queries for threat intelligence data such as IP addresses, URLs, or file hashes (MD5, SHA1, SHA256). The service integrates APIs from multiple threat intelligence platforms, providing security analysts and system administrators with convenient threat intelligence query capabilities to enhance threat identification and response efficiency.
 
-- **多源数据整合**：集成VirusTotal、AbuseIPDB、微步在线等主流威胁情报平台
-- **统一查询接口**：提供标准化的API接口，支持批量查询和自动化集成
-- **高性能设计**：采用异步查询机制，支持并发请求处理
-- **灵活扩展性**：模块化架构设计，易于集成新的情报源
+## Features
 
+- **Multi-source Data Integration**: Integrates mainstream threat intelligence platforms including VirusTotal, AbuseIPDB, and ThreatBook
+- **Unified Query Interface**: Provides standardized API interfaces, supporting batch queries and automated integration
+- **High-performance Design**: Employs asynchronous query mechanisms, supporting concurrent request processing
+- **Flexible Extensibility**: Modular architecture design, easy to integrate new intelligence sources
 
-## 项目结构
+## Project Structure
 
 ```
 c2_search_mcp/
-├── src/                       # 源代码目录
-│   ├── modules/               # 模块目录
-│   │   ├── logging/           # 日志处理模块
-│   │   ├── query_processor/   # 查询处理模块
-│   │   ├── result_aggregator/ # 结果聚合模块
-│   │   ├── threat_intel/      # 威胁情报API集成
-│   ├── config.py              # 配置管理
-│   ├── main.py                # 主程序入口
-│   └── __init__.py            # 包初始化文件
-├── tests/                     # 测试代码
-├── docs/                      # 文档
-├── config.example.yaml        # 配置文件示例
-├── requirements.txt           # Python依赖项
-├── pyproject.toml             # 项目配置文件
-├── uv.lock                    # uv锁定文件，确保环境一致性
-└── README.md                  # 项目说明文档
+├── src/                       # Source code directory
+│   ├── modules/               # Modules directory
+│   │   ├── logging/           # Logging module
+│   │   ├── query_processor/   # Query processing module
+│   │   ├── result_aggregator/ # Result aggregation module
+│   │   ├── threat_intel/      # Threat intelligence API integration
+│   ├── config.py              # Configuration management
+│   ├── main.py                # Main program entry
+│   └── __init__.py            # Package initialization file
+├── tests/                     # Test code
+├── docs/                      # Documentation
+├── config.example.yaml        # Configuration file example
+├── requirements.txt           # Python dependencies
+├── pyproject.toml             # Project configuration file
+├── uv.lock                    # uv lock file for environment consistency
+└── README.md                  # Project documentation
 ```
 
-## 安装说明
+## Installation Guide
 
-### 环境要求
+### Requirements
 
-- Python 3.12 或更高版本
-- uv包管理工具
+- Python 3.12 or higher
+- uv package manager
 
-### 安装步骤
+### Installation Steps
 
-1. 克隆代码仓库
+1. Clone the repository
    ```bash
    git clone https://github.com/xuanyu123/c2_search_mcp.git
    cd c2_search_mcp
    ```
 
-2. 安装uv（如果尚未安装）
+2. Install uv (if not already installed)
    ```bash
    # Windows
    pip install uv
@@ -58,22 +59,22 @@ c2_search_mcp/
    curl -sSf https://github.com/astral-sh/uv/releases/latest/download/uv-installer.sh | bash
    ```
 
-3. 使用uv同步开发环境（推荐）
+3. Sync development environment using uv (recommended)
    ```bash
-   # 使用uv.lock文件同步依赖
+   # Use uv.lock file to sync dependencies
    uv sync
    ```
 
-4. 配置API密钥
+4. Configure API keys
    ```bash
    cp config.example.yaml config.yaml
-   # 编辑config.yaml，填入各平台的API密钥
+   # Edit config.yaml and fill in API keys for each platform
    ```
 
-## 使用方法
+## Usage
 
-#### 配置MCP服务
-添加到您的 MCP 客户端配置文件，将"YOU_C2_SEARCH_MCP_DIR_PATH"替换为您自己的目录。
+#### Configure MCP Service
+Add to your MCP client configuration file, replace "YOU_C2_SEARCH_MCP_DIR_PATH" with your directory.
 
 ```bash
 "c2_search_mcp": {
@@ -89,67 +90,67 @@ c2_search_mcp/
    "autoApprove": []
 }
 ```
-### 使用示例
-#### cursor集成
-1. 配置mcp
+
+### Usage Examples
+#### Cursor Integration
+1. Configure MCP
 ![images](./images/cursor_mcp.png)
-2. cursor agent模式下，通过自然语言进行查询
+2. Query using natural language in Cursor agent mode
 ![images](./images/cursor_use_example.png)
 
-#### Cherry Studio集成
-1. 配置mcp
+#### Cherry Studio Integration
+1. Configure MCP
 ![images](./images/cherry_mcp.png)
-2. Cherry Studio agent模式下，通过自然语言进行查询
+2. Query using natural language in Cherry Studio agent mode
 ![images](./images/cherrystudio_use_example.png)
 
+## Development and Debugging
+### MCP Inspector Debugging
 
-## 开发调试
-### MCP Inspector调试
+MCP Inspector is a powerful debugging tool that helps you monitor and debug the running status of MCP services.
 
-MCP Inspector是一个强大的调试工具，可以帮助您监控和调试MCP服务的运行状态。
-
-1. 启动 Inspector
+1. Start Inspector
    ```bash
    fastmcp dev src/main.py
    ```
-   或者直接npx运行
+   Or run directly with npx
    ```bash
    npx @modelcontextprotocol/inspector uv run src/main.py
    ```
 
-2. 访问调试界面
-   - 打开浏览器访问 `http://localhost:port`（端口在控制台查看）
-   - 在Inspector界面中可以看到所有注册的MCP服务
+2. Access Debug Interface
+   - Open browser and visit `http://localhost:port` (check console for port)
+   - View all registered MCP services in the Inspector interface
    ![images](./images/Inspector.png)
 
-3. 调试功能
-   - 实时监控服务状态
-   - 查看请求/响应日志
-   - 测试API接口
-   - 查看性能指标
+3. Debug Features
+   - Real-time service status monitoring
+   - View request/response logs
+   - Test API interfaces
+   - Monitor performance metrics
 
-### 故障排除
+### Troubleshooting
 
-1. 服务无法启动
-   - 检查配置文件是否正确
-   - 确认所有依赖已正确安装
-   - 查看日志文件获取详细错误信息
+1. Service Won't Start
+   - Check if configuration file is correct
+   - Verify all dependencies are properly installed
+   - Check log files for detailed error information
 
-2. API调用失败
-   - 验证API密钥是否正确配置
-   - 检查网络连接状态
-   - 确认API请求限制是否超出
+2. API Call Failures
+   - Verify API keys are correctly configured
+   - Check network connection status
+   - Confirm API request limits haven't been exceeded
 
-## 贡献指南
+## Contributing
 
-欢迎提交问题报告和功能请求。如果您想贡献代码，请遵循以下步骤：
+We welcome issue reports and feature requests. If you want to contribute code, please follow these steps:
 
-1. Fork 项目仓库
-2. 创建您的功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交您的更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 开启一个 Pull Request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 许可证
+## License
 
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
